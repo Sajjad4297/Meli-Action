@@ -1,4 +1,4 @@
-name: انتقال فایل به گیت هاب
+name: دانلودر لینک مستقیم
 
 on:
   workflow_dispatch:
