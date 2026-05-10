@@ -1,128 +1,136 @@
-# 📦 Meli-Action
+<div dir="rtl">
 
-**A GitHub Actions-based tool to bypass internet censorship — download files from direct links, YouTube, Telegram, Google Play, and archive web pages, all through GitHub's unfiltered servers.**
+# 📦 ملی اکشن — Meli-Action
 
-> Originally created by [Kurdeus](https://github.com/Kurdeus/Meli-Action). This is a fork maintained by [iliasoli13](https://github.com/iliasoli13/Meli-Action).
+**ابزاری مبتنی بر گیت‌هاب اکشن برای دور زدن فیلترینگ اینترنت — دانلود فایل از لینک مستقیم، یوتیوب، تلگرام، گوگل پلی، و ذخیره صفحات وب، همه از طریق سرورهای فیلتر نشده گیت‌هاب.**
 
----
-
-## 🌐 How It Works
-
-GitHub Actions run on GitHub's own servers, which are **not blocked** by Iran's national internet filtering (filtering/censorship). This project exploits that fact:
-
-- **For file downloads:** The workflow uses `wget` to fetch the file inside GitHub's runner environment, then `git push`es it directly into your repository — ready for you to download from GitHub normally.
-- **For web archiving:** A headless Chromium browser (via `pyppeteer`) fully renders the filtered page, saves it as an MHTML archive, zips it, and pushes it to the repository.
-- **For YouTube/Telegram/Google Play:** Dedicated workflows use `yt-dlp` and platform-specific tooling to fetch media and apps, then commit them to the `downloads/` folder.
-
-No software installation on your device is required. Everything runs in the cloud.
+> ساخته شده توسط [Kurdeus](https://github.com/Kurdeus/Meli-Action) — این نسخه فورک شده و نگهداری می‌شود توسط [iliasoli13](https://github.com/iliasoli13/Meli-Action).
 
 ---
 
-## ✨ Features
+## 🌐 چطور کار می‌کنه؟
 
-| Feature | Details |
+گیت‌هاب اکشن‌ها روی سرورهای خود گیت‌هاب اجرا می‌شن که **توسط فیلترینگ اینترنت ملی ایران بلاک نشدن**. این پروژه از همین موضوع استفاده می‌کنه:
+
+- **برای دانلود فایل:** ورک‌فلو از `wget` برای دانلود فایل در محیط runner گیت‌هاب استفاده می‌کنه، بعد با `git push` مستقیماً به ریپازیتوری شما اضافه‌اش می‌کنه — آماده دانلود معمولی از گیت‌هاب.
+- **برای آرشیو صفحات وب:** یک مرورگر بی‌سر Chromium (از طریق `pyppeteer`) صفحه فیلتر شده رو کامل رندر می‌کنه، به فرمت MHTML ذخیره می‌کنه، زیپش می‌کنه و به ریپازیتوری پوش می‌کنه.
+- **برای یوتیوب، تلگرام و گوگل پلی:** ورک‌فلوهای اختصاصی از `yt-dlp` و ابزارهای مخصوص هر پلتفرم استفاده می‌کنن و فایل‌ها رو در پوشه `downloads/` کامیت می‌کنن.
+
+هیچ نرم‌افزاری نیاز نیست روی دستگاه شما نصب بشه. همه چیز در فضای ابری اجرا می‌شه.
+
+---
+
+## ✨ قابلیت‌ها
+
+| قابلیت | توضیحات |
 |---|---|
-| 📥 **Direct link download** | Downloads any file from a direct URL. Files larger than 99 MB are automatically split into 95 MB chunks (due to GitHub's file size limit) before being committed. |
-| 🎬 **YouTube downloader** | Downloads YouTube videos at your chosen quality. Includes a `google_service.json` config for browsing/searching YouTube through a v2ray proxy (note: only search and thumbnails load with this config, not video playback). |
-| 📱 **Telegram downloader** | Downloads files from public Telegram channels. |
-| 🛍️ **Google Play downloader** | Downloads installable APK files from Google Play. |
-| 🌐 **Web page archiver** | Saves filtered/blocked web pages as MHTML archives using a headless browser, then zips them for download. |
-| 🔞 **Adult content downloader** | Supports downloading from a certain well-known adult platform — just provide the page URL. (May occasionally error; retry if so.) |
-| 🎵 **Spotify & SoundCloud downloader** | Downloads tracks and playlists from Spotify and SoundCloud. |
+| 📥 **دانلود از لینک مستقیم** | هر فایلی از یک URL مستقیم دانلود می‌کنه. فایل‌های بیشتر از ۹۹ مگابایت به‌طور خودکار به تکه‌های ۹۵ مگابایتی تقسیم می‌شن (به خاطر محدودیت گیت‌هاب) و بعد کامیت می‌شن. |
+| 🎬 **دانلودر یوتیوب** | ویدیوهای یوتیوب رو با کیفیت دلخواه دانلود می‌کنه. شامل کانفیگ `google_service.json` برای جستجو و مرور یوتیوب از طریق پروکسی v2ray هم هست (توجه: با این کانفیگ فقط سرچ و تامبنیل لود می‌شه، نه پخش ویدیو). |
+| 📱 **دانلودر تلگرام** | فایل‌ها رو از کانال‌های عمومی تلگرام دانلود می‌کنه. |
+| 🛍️ **دانلودر گوگل پلی** | فایل‌های نصبی APK رو از گوگل پلی دانلود می‌کنه. |
+| 🌐 **آرشیو صفحات وب** | صفحات وب فیلتر شده رو با مرورگر بی‌سر به فرمت MHTML ذخیره می‌کنه و برای دانلود زیپ می‌کنه. |
+| 🔞 **دانلودر محتوای بزرگسالان** | از یک پلتفرم معروف بزرگسالان پشتیبانی می‌کنه — کافیه لینک صفحه رو بدی. (شاید گاهی خطا بده؛ اگه خطا داد یکم صبر کنید و دوباره امتحان کنید.) |
+| 🎵 **دانلودر اسپاتیفای و ساندکلود** | آهنگ‌ها و پلی‌لیست‌ها رو از Spotify و SoundCloud دانلود می‌کنه. |
 
 ---
 
-## 🚀 Getting Started
+## 🚀 شروع به کار
 
-### Step 1 — Fork the Repository
+### مرحله ۱ — فورک کن
 
-Click the **Fork** button at the top-right of the page to copy this repository into your own GitHub account.
+دکمه **Fork** رو در بالای صفحه بزن تا ریپازیتوری وارد حساب گیت‌هاب خودت بشه.
 
-### Step 2 — Enable Actions Write Permissions
+### مرحله ۲ — مجوز نوشتن اکشن‌ها رو فعال کن
 
-The workflows need permission to commit downloaded files back to your repository:
+ورک‌فلوها برای کامیت کردن فایل‌های دانلود شده به ریپازیتوری شما نیاز به مجوز دارن:
 
-1. Go to **Settings** ⚙️ in your forked repository.
-2. In the left sidebar, navigate to **Actions → General**.
-3. Under **"Workflow permissions"**, select **"Read and write permissions"**.
-4. Click **Save**.
+۱. توی ریپازیتوری فورک شده، برو به **Settings** ⚙️.
+۲. از منوی سمت چپ، برو به **Actions → General**.
+۳. زیر بخش **"Workflow permissions"**، گزینه **"Read and write permissions"** رو انتخاب کن.
+۴. **Save** رو بزن.
 
-> **Also**, under **"Actions permissions"**, make sure **"Allow all actions and reusable workflows"** is selected.
+> **همچنین**، زیر بخش **"Actions permissions"**، مطمئن بشو که **"Allow all actions and reusable workflows"** انتخاب شده.
 
-> 💡 **Security note:** Since you own this fork, granting write permissions to your own workflows is safe.
+> 💡 **نکته امنیتی:** چون این فورک متعلق به خودته، دادن مجوز نوشتن به ورک‌فلوهای خودت کاملاً امنه.
 
-### Step 3 — Run a Workflow
+### مرحله ۳ — یک ورک‌فلو اجرا کن
 
-1. Go to the **Actions** tab in your forked repository.
-2. Select the workflow you want to use from the left-hand list (e.g., "Download from URL", "YouTube Downloader", etc.).
-3. Click **Run workflow**.
-4. Fill in the required parameters (e.g., the URL, video quality, output folder).
-5. Click the green **Run workflow** button.
+۱. به تب **Actions** توی ریپازیتوری خودت برو.
+۲. ورک‌فلوی مورد نظرت رو از لیست سمت چپ انتخاب کن (مثلاً «دانلود از URL»، «دانلودر یوتیوب» و غیره).
+۳. دکمه **Run workflow** رو بزن.
+۴. پارامترهای لازم رو وارد کن (مثل URL، کیفیت ویدیو، پوشه خروجی).
+۵. دکمه سبز **Run workflow** رو بزن.
 
-Once the run completes, the downloaded file will appear in the designated folder inside your repository. You can then download it directly from GitHub.
+بعد از اتمام اجرا، فایل دانلود شده توی پوشه مشخص شده توی ریپازیتوری قابل مشاهده‌ست. بعدش می‌تونی مستقیم از گیت‌هاب دانلودش کنی.
 
 ---
 
-## 📁 Repository Structure
+## 📁 ساختار ریپازیتوری
+
+</div>
 
 ```
 Meli-Action/
 ├── .github/
-│   └── workflows/          # GitHub Actions workflow definitions
-│       ├── download.yml        # Direct URL downloader
-│       ├── youtube.yml         # YouTube downloader
-│       ├── telegram.yml        # Telegram file downloader
-│       ├── googleplay.yml      # Google Play APK downloader
-│       ├── mhtml.yml           # Web page archiver
+│   └── workflows/          # تعریف ورک‌فلوهای گیت‌هاب اکشن
+│       ├── download.yml        # دانلودر لینک مستقیم
+│       ├── youtube.yml         # دانلودر یوتیوب
+│       ├── telegram.yml        # دانلودر تلگرام
+│       ├── googleplay.yml      # دانلودر گوگل پلی
+│       ├── mhtml.yml           # آرشیوکننده صفحات وب
 │       └── ...
-├── downloads/              # Output folder — downloaded files land here
-├── save_as_mhtml.py        # Python script for headless web page archiving
-├── google_service.json     # v2ray config for YouTube browsing via proxy
+├── downloads/              # پوشه خروجی — فایل‌های دانلود شده اینجا ذخیره می‌شن
+├── save_as_mhtml.py        # اسکریپت پایتون برای آرشیو صفحات با مرورگر بی‌سر
+├── google_service.json     # کانفیگ v2ray برای مرور یوتیوب از طریق پروکسی
 └── README.md
 ```
 
----
-
-## ⚙️ Technical Details
-
-### Direct Downloader
-Uses `wget` inside the GitHub Actions runner. If the resulting file exceeds GitHub's 100 MB single-file limit, it is automatically split into ≤95 MB parts using a split utility, and each part is pushed separately.
-
-### Web Page Archiver (`save_as_mhtml.py`)
-Uses `pyppeteer` (a Python port of Puppeteer) to launch a headless Chromium instance, navigate to the target URL, wait for the page to fully load, and capture it in MHTML format. The resulting archive is then zipped and committed to the repository.
-
-### YouTube Downloader
-Powered by `yt-dlp`, supporting quality selection (e.g., 720p, 1080p, audio-only). The `google_service.json` file can be imported into v2ray to enable YouTube search and thumbnail browsing within a proxy setup.
-
-### Telegram Downloader
-Targets **public** Telegram channels only. Downloads files attached to messages using Telegram's public API.
-
-### Google Play Downloader
-Fetches APK files from the Google Play Store using automation tooling.
+<div dir="rtl">
 
 ---
 
-## 🔄 Updating to the Latest Version
+## ⚙️ جزئیات فنی
 
-To sync your fork with the latest changes from the upstream repository, click the **Sync fork** button on your repository's main page on GitHub.
+### دانلودر لینک مستقیم
+از `wget` در داخل runner گیت‌هاب اکشن استفاده می‌کنه. اگه فایل خروجی از محدودیت ۱۰۰ مگابایتی گیت‌هاب بیشتر بشه، به‌طور خودکار به تکه‌های حداکثر ۹۵ مگابایتی تقسیم می‌شه و هر تکه جداگانه پوش می‌شه.
+
+### آرشیوکننده صفحات وب (`save_as_mhtml.py`)
+از `pyppeteer` (نسخه پایتون Puppeteer) برای راه‌اندازی یک نمونه Chromium بی‌سر استفاده می‌کنه، به URL مورد نظر می‌ره، صبر می‌کنه تا صفحه کامل لود بشه و بعد در فرمت MHTML ذخیره‌اش می‌کنه. آرشیو نهایی زیپ شده و به ریپازیتوری کامیت می‌شه.
+
+### دانلودر یوتیوب
+با استفاده از `yt-dlp` کار می‌کنه و از انتخاب کیفیت (مثل ۷۲۰p، ۱۰۸۰p، فقط صدا) پشتیبانی می‌کنه. فایل `google_service.json` رو می‌شه توی v2ray ایمپورت کرد تا جستجو و مرور تامبنیل‌های یوتیوب در یک پروکسی ممکن بشه.
+
+### دانلودر تلگرام
+فقط کانال‌های **عمومی** تلگرام رو هدف قرار می‌ده. فایل‌های ضمیمه پیام‌ها رو با استفاده از API عمومی تلگرام دانلود می‌کنه.
+
+### دانلودر گوگل پلی
+فایل‌های APK رو از گوگل پلی با استفاده از ابزار اتوماسیون دریافت می‌کنه.
 
 ---
 
-## 🤝 Contributing
+## 🔄 آپدیت به نسخه جدید
 
-Have an idea for a new downloader or feature? Open an [Issue](https://github.com/iliasoli13/Meli-Action/issues) to suggest it. No promises, but useful ideas that benefit the community will be considered.
-
----
-
-## ⚠️ Disclaimer
-
-This project is intended for personal use to access content in restrictive network environments. Users are responsible for complying with the terms of service of any platform they interact with, as well as all applicable laws in their jurisdiction.
+برای همگام‌سازی فورک خودت با آخرین تغییرات ریپازیتوری اصلی، دکمه **Sync fork** رو در صفحه اصلی ریپازیتوریت در گیت‌هاب بزن.
 
 ---
 
-## ⭐ Support
+## 🤝 مشارکت
 
-If this tool helped you, please consider starring ⭐ the repository — it helps others find it!
+ایده‌ای برای یک دانلودر جدید یا قابلیت جدید داری؟ یک [Issue](https://github.com/iliasoli13/Meli-Action/issues) باز کن و پیشنهادت رو بنویس. قول نمی‌دم بسازمش، ولی اگه جالب باشه و به درد بقیه بخوره حتماً بررسی می‌کنم.
+
+---
+
+## ⚠️ سلب مسئولیت
+
+این پروژه برای استفاده شخصی جهت دسترسی به محتوا در محیط‌های با محدودیت شبکه طراحی شده. کاربران مسئول رعایت شرایط خدمات هر پلتفرمی هستن که باهاش تعامل دارن، و همچنین باید قوانین کشورشون رو رعایت کنن.
+
+---
+
+## ⭐ حمایت
+
+اگه این ابزار به کارت اومد، با زدن ستاره ⭐ ازم حمایت کن — به پیدا شدن پروژه توسط بقیه کمک می‌کنه!
+
+</div>
 
 <a href="https://star-history.com/#Kurdeus/Meli-Action&Date">
   <picture>
@@ -132,11 +140,15 @@ If this tool helped you, please consider starring ⭐ the repository — it help
   </picture>
 </a>
 
+<div dir="rtl">
+
 ---
 
-## 👥 Credits
+## 👥 تشکر و قدردانی
 
-Thanks to everyone who has contributed to this project!
+ممنون از همه کسایی که در این پروژه مشارکت داشتن!
+
+</div>
 
 <a href="https://github.com/Kurdeus/Meli-Action/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Kurdeus/Meli-Action" alt="Meli-Action contributors" width="200"/>
